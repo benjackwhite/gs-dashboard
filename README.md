@@ -12,7 +12,7 @@ Be sure to refresh the data with the top right button :)
 
 ## Installation
 
-Download and run npm install && `npm install && bower install`
+Download and run `npm install && bower install`
 
 ## Usage
 
