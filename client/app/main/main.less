@@ -1,0 +1,407 @@
+body, ul, li {
+    padding: 0px;
+    margin: 0px;
+    background: @flat-blue;
+}
+
+.gs-dashboard {
+      position: absolute;
+      left: 0px;
+      top: 60px;
+      bottom: 0px;
+      right: 0px;
+}
+
+
+.gs-navbar {
+    width: 100%;
+    height: 60px;
+    background: @flat-grey;
+    text-align: center;
+
+    .gs-navbar-title {
+
+        .img-wrapper {
+            height: 60px;
+            padding: 15px 0px;
+            vertical-align: middle;
+            display: inline-block;
+            margin-top: -4px;
+            overflow: hidden;
+            .transition(300ms);
+                
+            width: 30px;
+            margin-right: 10px;
+
+            img {
+                height: 100%;
+            }
+        }
+
+        h1 {
+            vertical-align: middle;
+            display: inline-block;
+            padding: 0px;
+            margin: 0px;
+            font-size: 1.2em;
+            font-family: 'Avenir';
+            font-weight: 600;
+            opacity: .6;
+        }
+
+        @media screen and (min-width:@screen-sm)
+        {
+            .img-wrapper {
+                width: 152px;
+                margin-right: 20px;
+            }
+        }
+    }
+
+    .gs-navbar-right {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        .btn {
+            span {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+
+.gs-section {
+    padding: 0px;
+    .transition(300ms);
+    min-height: 320px;
+    height: 50%;
+
+    .gs-section-content {
+        position: relative;
+        padding: 10px;
+        min-height: 320px;
+        overflow: hidden;
+        height: 100%;
+
+        h2 {
+            font-size: 1em;
+            text-transform: uppercase;
+            color: #FFF;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .gs-section-central-icon {
+            display: block;
+            position: absolute;
+            left: 0px;
+            top: 50%;
+            bottom: 0px;
+            right: 0px;
+            .translateY(-75px);
+
+            font-size: 150px;
+            text-align: center;
+
+            i {
+                display: block;
+                margin-top: 0px;
+            }
+        }
+
+        .gs-section-content-shout {
+            font-size: 3em;
+            .transition(300ms);
+            margin-left: 10px;
+
+            .fa{
+                margin-right: 10px;
+            }
+           
+            small {
+                display: block;
+                font-size: 0.4em;
+                white-space: nowrap;
+
+                &.inline {
+                    display: inline;
+                }
+            }
+        }
+    }
+
+}
+
+svg {
+    path {
+        stroke: rgba(255, 255, 255, 0.7);
+    }
+
+    .tick {
+        color: #FFF;
+
+        text {
+            color: #FFF;
+        }
+    }
+
+    .x-axis {
+        display: none;
+    }
+
+    .y-axis {
+        display: none;
+    }
+}
+
+
+//Objects 
+
+.GS-Thermometer(@base-color) {
+    position: absolute;
+    left: 50%;
+    top: 40px;
+    bottom: 20px;
+    width: 20px;
+    background: @base-color - 70;
+    .borderRadius(10px);
+
+    &:after {
+        position: absolute;
+        content: " ";
+        bottom: -5px;
+        left: -20px;
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+        .borderRadius(50px);
+        background: @base-color;
+    }
+
+    .gs-thermometer-thumb {
+        background: @base-color;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        height: 50%;
+        .borderRadius(10px);
+        .transition(300ms);
+
+    }
+}
+
+.gs-thermometer { .GS-Thermometer(@flat-grey - 80); }
+
+.GS-Plant(@base-color) {
+    @plant-width: 10px;
+    @plant-head-width: 50px;
+
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    width: @plant-width;
+    margin-left: -@plant-width * .5;
+    height: 50%;
+    background: @base-color;
+    .transition(300ms);
+
+    &:before {
+        position: absolute;
+        left: -@plant-head-width * .5;
+        top: -@plant-head-width;
+        width: @plant-head-width;
+        height: @plant-head-width;
+        margin-left: @plant-width * .5;
+        margin-top: @plant-width * .5;
+        content: " ";
+        .transition(300ms);
+
+        .borderRadius(@plant-head-width);
+        background: @base-color;
+    }
+
+
+    i {
+        position: absolute;
+        bottom: 0%;
+        margin-left: 10px;
+        font-size: 1.5em;
+        color: @base-color;
+        margin-left: @plant-width * .5;
+        .transition(300ms);
+
+        &:nth-child(even) {
+            .rotateY(180deg);
+
+            margin-left: -@plant-width * .5 - 12px;
+        }
+    }
+
+    //Loop around the 5 leaf possibilities
+    .mixin-loop-leaves (@i) when (@i >= 0) {
+
+        &.gs-plant-leaves-@{i} {
+            @plant-i-color: @base-color - 50 + 10 * @i;
+            background: @plant-i-color;
+            height: @i / 5 * 50%;
+
+            &:before {
+                background: @plant-i-color;
+            }
+
+            i {
+                color: @plant-i-color;
+            }
+        }
+
+
+        i:nth-child(@{i}) {
+            bottom: @i * 15%;
+        }
+        .mixin-loop-leaves(@i - 1);
+    }
+
+    .mixin-loop-leaves(5);
+
+}
+
+.gs-plant { .GS-Plant(@flat-grey - 80); }
+
+#gsi-temperature {
+    background: @flat-orange;
+    color: @flat-orange - 80;
+
+    .gs-thermometer {
+        .GS-Thermometer(@flat-orange - 80);
+    }
+
+
+    .gs-section-content-shout {
+        position: absolute;
+        left: 50%;
+        margin-left: -80px;
+        white-space: nowrap;
+        text-align: right;
+
+        @media screen and (min-width:@screen-sm)
+        {
+            font-size: 4em;
+            margin-left: -120px;
+        }
+
+        small {
+            vertical-align: super;
+        }
+    }
+}
+
+#gsi-activity {
+    background: @flat-blue;
+    color: @flat-blue - 80;
+
+    .gs-section-content {
+
+        .gs-section-content-shout {
+            color: rgba(255, 255, 255, 0.7);
+
+            small {
+                display: inline;
+            }
+        }
+
+        .gs-section-chart {
+            padding-top: 50px;
+            height: 80%
+        }
+ 
+    }
+
+}
+
+#gsi-plants {
+    background: @flat-green;
+    color: @flat-green - 80;
+
+    .gs-plant {
+        .GS-Plant(@flat-green - 80);
+    }
+}
+
+#gsi-weather {
+    background: @flat-yellow;
+    color: @flat-yellow - 80;
+}
+
+#gsi-fridge {
+    background: @flat-grey;
+    color: @flat-grey - 80;
+
+    .gs-section-content-shout {
+        text-align: center;
+        margin-top: 80px;
+    }
+
+    &.isAlerting {
+        background: @flat-red;
+        color: #FFF;
+        animation: alert 1s infinite;
+        z-index: 2;
+
+        .gs-section-content-shout {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            top: 50%;
+            margin-top: -60px;
+
+            text-align: center;
+
+        }
+
+        @keyframes alert {
+            0% {background-color: @flat-red; .scale(1);}
+            50% {background-color: @flat-red - 100; .scale(1.1);}
+            100% {background-color: @flat-red; .scale(1);}
+        }
+    }
+}
+
+#gsi-tweets {
+    background: @flat-twitter;
+    color: @flat-twitter - 80;
+
+    .gs-section-content-shout {
+        margin-top: 40px;
+        text-align: center;
+    }
+}
+
+//Moves Activity panel to the top
+
+@media screen and (max-width:@screen-lg)
+{
+    .gs-section {
+        height: 33.333333333%;
+    }
+
+    .gs-section-content {
+
+    }
+
+    #gsi-activity {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+    }
+
+    #gsi-plants, #gsi-temperature {
+        margin-top: 320px;
+    }
+
+
+}
+

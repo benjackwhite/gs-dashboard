@@ -1,0 +1,97 @@
+<div class="gs-navbar navbar-fixed-top">
+  <div class="gs-navbar-title">
+    <div class="img-wrapper">      
+      <img src="/assets/images/gosquared.png">
+    </div>
+    <h1>DASHBOARD</h1>
+  </div>
+
+  <div class="gs-navbar-right">
+    <a class="btn" ng-click="triggerRefresh()" class="gs-btn btn-primary">
+      <span class="hidden-xs">Refresh data</span>
+      <i class="fa fa-refresh" ng-class="{'fa-spin':isRefreshingStats || isRefreshingMetrics}"></i>
+    </a>
+  </div>
+</div>
+
+<div class="gs-dashboard">
+
+  <div class="gs-section col-lg-3 col-md-6 col-sm-6 col-xs-6" id="gsi-temperature">
+    <div class="gs-section-content">
+      <h2>Temperature</h2>
+
+      <div class="gs-thermometer">
+        <div class="gs-thermometer-thumb" style="height: {{stats.temperature.temperature / 25 * 100 + '%'}}"></div>
+      </div>
+
+      <p class="gs-section-content-shout" style="top:{{100 - stats.temperature.temperature / 25 * 100 + '%'}}">{{stats.temperature.temperature}} <small class="inline"> &deg;C</small></p>
+    </div>
+  </div>
+
+  <div class="gs-section col-lg-6 col-md-12 col-sm-12 col-xs-12" id="gsi-activity">
+    <div class="gs-section-content">
+      <h2>Activity</h2>
+      <p class="gs-section-content-shout">{{metrics[metrics.length - 1].usersOnline}} <small>users online</small> </p>
+      <div class="gs-section-chart" d3-line-graph chart-data="metrics" chart-x-data="timestamp" chart-y-data="usersOnline"></div>
+    </div>
+    
+  </div>
+
+
+  <div class="gs-section col-lg-3 col-md-6 col-sm-6 col-xs-6" id="gsi-plants">
+    <div class="gs-section-content">
+      
+      <h2>Plants</h2>
+      <p class="gs-section-content-shout">
+        <span ng-show="stats.plants.daysTillWater">{{stats.plants.daysTillWater}} days <small>until watering</small></span>
+        <span ng-hide="stats.plants.daysTillWater">It's time <small>to water the poor plants</small></span>
+      </p>
+
+      <div class="gs-plant gs-plant-leaves-{{stats.plants.daysTillWater}}">
+        <i class="fa fa-leaf"></i>
+        <i class="fa fa-leaf"></i>
+        <i class="fa fa-leaf"></i>
+        <i class="fa fa-leaf"></i>
+        <i class="fa fa-leaf"></i>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="gs-section col-lg-4 col-md-4 col-sm-4 col-xs-12" id="gsi-weather">
+    <div class="gs-section-content">
+      
+      <h2>Weather</h2>
+
+      <p class="gs-section-content-shout">{{stats.weather.main.temp}} &deg;C</p>
+
+      <div class="gs-section-central-icon ">
+        <i class="fa fa-{{weatherIcon}}"></i>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="gs-section col-lg-4 col-md-4 col-sm-4 col-xs-12" id="gsi-fridge" ng-class="{isAlerting:!stats.fridge.beerCount}">
+    <div class="gs-section-content">
+      
+      <h2>Fridge</h2>
+      <p class="gs-section-content-shout">
+        <span ng-show="stats.fridge.beerCount">{{stats.fridge.beerCount}} beers left <small>in the fridge</small></span>
+        <span ng-hide="stats.fridge.beerCount">STOP EVERYTHING!<small>WE'RE OUT OF BEER!!!!</small></span>
+    </div>
+    
+  </div>
+
+  <div class="gs-section col-lg-4 col-md-4 col-sm-4 col-xs-12" id="gsi-tweets">
+    <div class="gs-section-content">
+      
+      <h2>Tweets</h2>
+      <p class="gs-section-content-shout"><i class="fa fa-twitter"></i>{{stats.twitter.count.month}} <small class="inline">tweets this month</small></p>
+      <p class="gs-section-content-shout"><i class="fa fa-group"></i>{{stats.twitter.followers}} <small class="inline">followers</small></p>
+    </div>
+    
+  </div>
+
+
+</div>
