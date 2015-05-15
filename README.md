@@ -4,6 +4,10 @@ A simple dashboard designed with GoSquared in mind. All of the data is served by
 
 The activity pane is polling `api/metrics` regularly with pseudo-random responses to give an idea of what it would look like with proper data. There is all sorts of improvements that could be done around use of Websockets for push functionality instead of polling, data transfer reduction through etags etc. 
 
+Demo available at http://gs.benjackwhite.co.uk
+
+Be sure to refresh the data with the top right button :)
+
 
 
 ## Installation
